@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
 import Chart from './components/Chart';
 import WeightInput from './components/WeightInput';
 import { addWeight, getWeights, WeightData } from './weights';
+
+const theme = {
+  ...DefaultTheme,
+};
 
 export default function App() {
   const [data, setData] = useState<WeightData>(getWeights());
@@ -13,10 +18,12 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
-      <WeightInput onSubmit={onSubmitWeight} />
-      <Chart data={data} />
-    </View>
+    <PaperProvider theme={theme}>
+      <View style={styles.container}>
+        <WeightInput onSubmit={onSubmitWeight} />
+        <Chart data={data} />
+      </View>
+    </PaperProvider>
   );
 }
 

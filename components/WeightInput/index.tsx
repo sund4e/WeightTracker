@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     padding: 20,
     elevation: 4,
     margin: 10,
-    flexGrow: 1,
   },
   button: {
     marginTop: 10,
