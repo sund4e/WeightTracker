@@ -9,7 +9,9 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height * 0.75;
 export default function Chart({ data }: { data: WeightData }) {
   const { colors } = useTheme();
-  const keys = Object.keys(data);
+  const keys = Object.keys(data).map(
+    (date) => `${new Date(date).getDate()}/${new Date(date).getMonth()}`
+  );
   const values = Object.values(data);
   return keys.length > 0 ? (
     <LineChart
