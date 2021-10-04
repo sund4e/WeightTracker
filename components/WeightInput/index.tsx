@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { TextInput, Surface, Button } from 'react-native-paper';
+import { TextInput, Surface } from 'react-native-paper';
 
 export default function WeightInput({
   currentWeight,

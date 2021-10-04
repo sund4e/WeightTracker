@@ -7,12 +7,32 @@ import { WeightData } from '../../weights';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height * 0.75;
-export default function Chart({ data }: { data: WeightData }) {
+export default function Chart({
+  data,
+  currentDate,
+  setDate,
+}: {
+  data: WeightData;
+  currentDate: string;
+  setDate: (newDate: string) => void;
+}) {
   const { colors } = useTheme();
   const keys = Object.keys(data).map(
     (date) => `${new Date(date).getDate()}/${new Date(date).getMonth()}`
   );
   const values = Object.values(data);
+
+  const onPointClick = (pointData: { index: number; value: number }) => {
+    setDate(Object.keys(data)[pointData.index]);
+  };
+
+  const getDotColor = (dataPoint: number, dataPointIndex: number) => {
+    if (Object.keys(data)[dataPointIndex] === currentDate) {
+      return colors.accent;
+    }
+    return colors.primary;
+  };
+
   return keys.length > 0 ? (
     <LineChart
       data={{
@@ -39,11 +59,13 @@ export default function Chart({ data }: { data: WeightData }) {
         propsForDots: {
           r: '6',
           strokeWidth: '2',
-          stroke: colors.accent,
+          stroke: colors.primary,
         },
       }}
       bezier
       style={styles.chart}
+      onDataPointClick={onPointClick}
+      getDotColor={getDotColor}
     />
   ) : (
     <Text style={styles.chart}>Add your weight to view data</Text>

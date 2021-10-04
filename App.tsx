@@ -24,7 +24,7 @@ export default function App() {
       <View style={styles.container}>
         <DateSelector currentDate={date} setDate={setDate} />
         <WeightInput onSubmit={onSubmitWeight} currentWeight={data[date]} />
-        <Chart data={data} />
+        <Chart data={data} currentDate={date} setDate={setDate} />
       </View>
     </PaperProvider>
   );
