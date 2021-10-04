@@ -25,16 +25,8 @@ export default function WeightInput({
         keyboardType="numeric"
         value={weight}
         onChangeText={(weight) => setWeight(weight)}
+        onSubmitEditing={() => weight && onSubmit(parseFloat(weight))}
       />
-      <Button
-        icon="check"
-        mode="contained"
-        style={styles.button}
-        disabled={!(weight && parseFloat(weight))}
-        onPress={() => weight && onSubmit(parseFloat(weight))}
-      >
-        Save
-      </Button>
     </Surface>
   );
 }
