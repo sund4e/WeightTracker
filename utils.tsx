@@ -7,3 +7,8 @@ export const moveDate = (
   date.setDate(startDate.getDate() + daysToMove);
   return date.toDateString();
 };
+
+export const getDateFromDateString = (dateString?: string): Date => {
+  const date = dateString ? new Date(dateString) : new Date();
+  return new Date(date.toDateString());
+};

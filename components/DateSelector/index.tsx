@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
-import { moveDate } from '../../utils';
+import { moveDate, getDateFromDateString } from '../../utils';
 
 export default function DateSelector({
   currentDate,
@@ -23,7 +23,9 @@ export default function DateSelector({
     <Appbar.Header>
       <Appbar.Action icon="arrow-left" onPress={previousDate} />
       <Appbar.Content title={currentDate} style={styles.content} />
-      <Appbar.Action icon="arrow-right" onPress={nextDate} />
+      {getDateFromDateString(currentDate) < getDateFromDateString() && (
+        <Appbar.Action icon="arrow-right" onPress={nextDate} />
+      )}
     </Appbar.Header>
   );
 }
