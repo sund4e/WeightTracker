@@ -15,7 +15,7 @@ export default function App() {
   const [data, setData] = useState<WeightData>(getWeights());
   const [date, setDate] = useState(new Date().toDateString());
   const onSubmitWeight = (weight: number) => {
-    addWeight(weight);
+    addWeight(weight, date);
     setData(getWeights());
   };
 
@@ -23,7 +23,7 @@ export default function App() {
     <PaperProvider theme={theme}>
       <View style={styles.container}>
         <DateSelector currentDate={date} setDate={setDate} />
-        <WeightInput onSubmit={onSubmitWeight} />
+        <WeightInput onSubmit={onSubmitWeight} currentWeight={data[date]} />
         <Chart data={data} />
       </View>
     </PaperProvider>

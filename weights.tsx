@@ -14,8 +14,8 @@ const weights: WeightData = {
   [moveDate(-1)]: 50,
 };
 
-export const addWeight = (weight: number) => {
-  weights[new Date().toDateString()] = weight;
+export const addWeight = (weight: number, date: string) => {
+  weights[date] = weight;
 };
 
 export const getWeights = () => {

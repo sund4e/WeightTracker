@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { TextInput, Surface, Button } from 'react-native-paper';
 
 export default function WeightInput({
+  currentWeight,
   onSubmit,
 }: {
+  currentWeight?: number;
   onSubmit: (weight: number) => void;
 }) {
   const [weight, setWeight] = useState<string>();
+
+  useEffect(() => {
+    if (currentWeight) {
+      setWeight(currentWeight.toString());
+    }
+  }, [currentWeight]);
 
   return (
     <Surface style={styles.surface}>
