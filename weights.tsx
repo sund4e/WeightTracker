@@ -1,23 +1,17 @@
+import { moveDate } from './utils';
 export type WeightData = Record<string, number>;
 
-const getDate = (daysAgo: number) => {
-  const today = new Date();
-  const date = new Date(today);
-  date.setDate(today.getDate() - daysAgo);
-  return date.toDateString();
-};
-
 const weights: WeightData = {
-  [getDate(10)]: 55,
-  [getDate(9)]: 53,
-  [getDate(8)]: 52,
-  [getDate(7)]: 53,
-  [getDate(6)]: 53.5,
-  [getDate(5)]: 53,
-  [getDate(4)]: 52,
-  [getDate(3)]: 51,
-  [getDate(2)]: 51.5,
-  [getDate(1)]: 50,
+  [moveDate(-10)]: 55,
+  [moveDate(-9)]: 53,
+  [moveDate(-8)]: 52,
+  [moveDate(-7)]: 53,
+  [moveDate(-6)]: 53.5,
+  [moveDate(-5)]: 53,
+  [moveDate(-4)]: 52,
+  [moveDate(-3)]: 51,
+  [moveDate(-2)]: 51.5,
+  [moveDate(-1)]: 50,
 };
 
 export const addWeight = (weight: number) => {

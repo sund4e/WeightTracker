@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
 import Chart from './components/Chart';
+import DateSelector from './components/DateSelector';
 import WeightInput from './components/WeightInput';
 import { addWeight, getWeights, WeightData } from './weights';
 
@@ -12,6 +13,7 @@ const theme = {
 
 export default function App() {
   const [data, setData] = useState<WeightData>(getWeights());
+  const [date, setDate] = useState(new Date().toDateString());
   const onSubmitWeight = (weight: number) => {
     addWeight(weight);
     setData(getWeights());
@@ -20,6 +22,7 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
       <View style={styles.container}>
+        <DateSelector currentDate={date} setDate={setDate} />
         <WeightInput onSubmit={onSubmitWeight} />
         <Chart data={data} />
       </View>
