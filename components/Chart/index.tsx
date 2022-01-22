@@ -5,16 +5,21 @@ import { Text, useTheme } from 'react-native-paper';
 
 import { WeightData } from '../../weights';
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height * 0.75;
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height * 0.75;
+
 export default function Chart({
   data,
   currentDate,
   setDate,
+  width,
+  height,
 }: {
   data: WeightData;
   currentDate: string;
   setDate: (newDate: string) => void;
+  width?: number;
+  height?: number;
 }) {
   const { colors } = useTheme();
   const keys = Object.keys(data).map(
@@ -43,8 +48,8 @@ export default function Chart({
           },
         ],
       }}
-      width={width}
-      height={height}
+      width={width || screenWidth}
+      height={height || screenHeight}
       yAxisSuffix="kg"
       yAxisInterval={1} // optional, defaults to 1
       chartConfig={{
@@ -63,22 +68,10 @@ export default function Chart({
         },
       }}
       bezier
-      style={styles.chart}
       onDataPointClick={onPointClick}
       getDotColor={getDotColor}
     />
   ) : (
-    <Text style={styles.chart}>Add your weight to view data</Text>
+    <Text>Add your weight to view data</Text>
   );
 }
-
-const styles = StyleSheet.create({
-  chart: {
-    marginVertical: 8,
-    margin: 10,
-  },
-  text: {
-    width,
-    height,
-  },
-});

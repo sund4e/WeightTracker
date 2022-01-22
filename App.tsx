@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
+import { Card } from './components';
 import Chart from './components/Chart';
 import DateSelector from './components/DateSelector';
 import WeightInput from './components/WeightInput';
@@ -24,7 +25,14 @@ export default function App() {
       <View style={styles.container}>
         <DateSelector currentDate={date} setDate={setDate} />
         <WeightInput onSubmit={onSubmitWeight} currentWeight={data[date]} />
-        <Chart data={data} currentDate={date} setDate={setDate} />
+        <Card>
+          <Chart
+            data={data}
+            currentDate={date}
+            setDate={setDate}
+            height={500}
+          />
+        </Card>
       </View>
     </PaperProvider>
   );
