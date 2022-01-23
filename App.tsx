@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
 import { Card } from './components';
 import Chart from './components/Chart';
-import DateSelector from './components/DateSelector';
-import WeightInput from './components/WeightInput';
+import { Style } from './theme';
 import { addWeight, getWeights, WeightData } from './weights';
-
-const theme = {
-  ...DefaultTheme,
-};
 
 export default function App() {
   const [data, setData] = useState<WeightData>(getWeights());
@@ -21,28 +15,19 @@ export default function App() {
   };
 
   return (
-    <PaperProvider theme={theme}>
-      <View style={styles.container}>
-        <DateSelector currentDate={date} setDate={setDate} />
-        <WeightInput onSubmit={onSubmitWeight} currentWeight={data[date]} />
-        <Card>
-          <Chart
-            data={data}
-            currentDate={date}
-            setDate={setDate}
-            height={500}
-          />
-        </Card>
-      </View>
-    </PaperProvider>
+    <View style={styles.container}>
+      <Card>
+        <Chart data={data} currentDate={date} setDate={setDate} height={500} />
+      </Card>
+    </View>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = Style.create((theme) => ({
   container: {
     paddingTop: 50,
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#fff',
+    backgroundColor: theme.color.dark,
   },
-});
+}));

@@ -1,15 +1,39 @@
 import { StyleSheet, ViewStyle, TextStyle, ImageStyle } from 'react-native';
+import { purple100 } from 'react-native-paper/lib/typescript/styles/colors';
 
 type NamedStyles<T> = {
   [P in keyof T]: ViewStyle | TextStyle | ImageStyle;
 };
 
+const palette = {
+  light: {
+    1: '#FFFFFF',
+    2: '#E6E6E7',
+    3: 'AFADB1',
+  },
+  dark: {
+    1: '#000000',
+    2: '#292929',
+    3: '#242424',
+  },
+  purple: {
+    1: '#534C5F', // Do not use with text, not enough contrast
+    2: '#433E47',
+    3: '#332941',
+    4: '#1F1A24',
+  },
+};
+
 const theme = {
   spacing: {
-    small: 5,
+    small: 10,
+    medium: 20,
   },
   color: {
-    primary: 'blue',
+    shadow: palette.dark['3'],
+    dark: palette.dark['2'],
+    primary: palette.purple['4'],
+    secondary: palette.purple['2'],
   },
 };
 

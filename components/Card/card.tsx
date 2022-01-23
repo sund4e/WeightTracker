@@ -26,10 +26,12 @@ export const Card = ({ children }: { children: React.ReactElement }) => {
 
 const styles = Style.create((theme) => ({
   container: {
-    padding: theme.spacing.small,
+    padding: theme.spacing.medium,
     borderWidth: 1,
     margin: theme.spacing.small,
     borderRadius: 5,
     backgroundColor: theme.color.primary,
+    borderColor: theme.color.secondary,
+    shadowColor: theme.color.shadow,
   },
 }));
