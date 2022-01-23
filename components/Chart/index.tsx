@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
-import { Text, useTheme } from 'react-native-paper';
 
+import { useTheme } from '../../theme';
 import { WeightData } from '../../weights';
+import { Text } from '../Text/Text';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height * 0.75;
@@ -21,7 +22,7 @@ export default function Chart({
   width?: number;
   height?: number;
 }) {
-  const { colors } = useTheme();
+  const { color } = useTheme();
   const keys = Object.keys(data).map(
     (date) => `${new Date(date).getDate()}/${new Date(date).getMonth()}`
   );
@@ -33,9 +34,9 @@ export default function Chart({
 
   const getDotColor = (dataPoint: number, dataPointIndex: number) => {
     if (Object.keys(data)[dataPointIndex] === currentDate) {
-      return colors.accent;
+      return color.accent;
     }
-    return colors.primary;
+    return color.primary;
   };
 
   return keys.length > 0 ? (
@@ -53,8 +54,10 @@ export default function Chart({
       yAxisSuffix="kg"
       yAxisInterval={1} // optional, defaults to 1
       chartConfig={{
-        backgroundGradientFrom: colors.backdrop,
-        backgroundGradientTo: colors.primary,
+        backgroundGradientFrom: color.dark,
+        backgroundGradientTo: color.primary,
+        backgroundGradientToOpacity: 0,
+        backgroundGradientFromOpacity: 0,
         decimalPlaces: 2, // optional, defaults to 2dp
         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
@@ -64,7 +67,7 @@ export default function Chart({
         propsForDots: {
           r: '6',
           strokeWidth: '2',
-          stroke: colors.primary,
+          stroke: color.primary,
         },
       }}
       bezier

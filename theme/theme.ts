@@ -1,5 +1,4 @@
 import { StyleSheet, ViewStyle, TextStyle, ImageStyle } from 'react-native';
-import { purple100 } from 'react-native-paper/lib/typescript/styles/colors';
 
 type NamedStyles<T> = {
   [P in keyof T]: ViewStyle | TextStyle | ImageStyle;
@@ -51,4 +50,8 @@ const createStyle = <T extends NamedStyles<T>>(
 
 export const Style = {
   create: createStyle,
+};
+
+export const useTheme = () => {
+  return theme;
 };
