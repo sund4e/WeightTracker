@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View, Dimensions } from 'react-native';
 
-import { Card } from './components';
+import { Card, Button } from './components';
 import Chart from './components/Chart';
 import { Style } from './theme';
 import { addWeight, getWeights, WeightData } from './weights';
@@ -17,17 +17,27 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Card>
-        <Chart data={data} currentDate={date} setDate={setDate} height={500} />
+        <Chart data={data} currentDate={date} setDate={setDate} height={700} />
       </Card>
+      <View style={styles.bottomContainer}>
+        <Button onPress={() => console.log('pressed!!')}>+</Button>
+      </View>
     </View>
   );
 }
 
 const styles = Style.create((theme) => ({
   container: {
-    paddingTop: 50,
+    paddingVertical: 50,
     flex: 1,
     flexDirection: 'column',
+    justifyContent: 'space-between',
     backgroundColor: theme.color.dark,
+  },
+  bottomContainer: {
+    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 30,
+    width: Dimensions.get('window').width,
   },
 }));

@@ -32,8 +32,11 @@ const theme = {
   color: {
     shadow: palette.dark['3'],
     dark: palette.dark['2'],
-    primary: palette.purple['4'],
+    primary: palette.purple['3'],
     secondary: palette.purple['2'],
+    accent: palette.purple['1'],
+    surface: palette.purple['4'],
+    text: palette.light['2'],
   },
 };
 
