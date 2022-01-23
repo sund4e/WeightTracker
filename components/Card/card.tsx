@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { LayoutRectangle, StyleSheet, View } from 'react-native';
+import { LayoutRectangle, View } from 'react-native';
 
-const spacing = 5;
+import { Style } from '../../theme';
 
 export const Card = ({ children }: { children: React.ReactElement }) => {
   const [contentDimensions, setContentDimensions] = useState<LayoutRectangle>();
@@ -24,10 +24,12 @@ export const Card = ({ children }: { children: React.ReactElement }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = Style.create((theme) => ({
   container: {
-    padding: spacing,
+    padding: theme.spacing.small,
     borderWidth: 1,
-    margin: spacing,
+    margin: theme.spacing.small,
+    borderRadius: 5,
+    backgroundColor: theme.color.primary,
   },
-});
+}));
