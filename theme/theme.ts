@@ -37,6 +37,9 @@ const theme = {
     surface: palette.purple['4'],
     text: palette.light['2'],
   },
+  font: {
+    medium: 16,
+  },
 };
 
 const createStyle = <T extends NamedStyles<T>>(

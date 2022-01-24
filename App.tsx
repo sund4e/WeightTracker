@@ -5,6 +5,7 @@ import { Card, Button } from './components';
 import Chart from './components/Chart';
 import { Style } from './theme';
 import { BottomSheet } from './views/bottomSheet';
+import { MeasurementView } from './views/measurementView';
 import { addWeight, getWeights, WeightData } from './weights';
 
 export default function App() {
@@ -29,7 +30,7 @@ export default function App() {
         <Button onPress={onPressButton}>+</Button>
       </View>
       <BottomSheet ref={bottomSheetRef}>
-        <Button onPress={onPressButton}>+</Button>
+        <MeasurementView />
       </BottomSheet>
     </View>
   );

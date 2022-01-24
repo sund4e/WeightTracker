@@ -18,6 +18,7 @@ export const BottomSheet = React.forwardRef<
       onChange={() => console.log('change')}
       enablePanDownToClose
       backgroundStyle={styles.background}
+      keyboardBlurBehavior="restore"
     >
       <View>{props.children}</View>
     </RNBottomSheet>

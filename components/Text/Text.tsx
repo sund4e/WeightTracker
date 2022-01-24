@@ -14,6 +14,6 @@ export const Text = ({
 const styles = Style.create((theme) => ({
   text: {
     color: theme.color.text,
-    fontSize: 16,
+    fontSize: theme.font.medium,
   },
 }));
