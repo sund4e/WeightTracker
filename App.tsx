@@ -27,10 +27,15 @@ export default function App() {
         <Chart data={data} currentDate={date} setDate={setDate} height={700} />
       </Card>
       <View style={styles.bottomContainer}>
-        <Button onPress={onPressButton}>+</Button>
+        <Button onPress={onPressButton} style={styles.button}>
+          +
+        </Button>
       </View>
       <BottomSheet ref={bottomSheetRef}>
-        <MeasurementView />
+        <MeasurementView
+          onSave={onSubmitWeight}
+          onClose={() => bottomSheetRef.current?.close()}
+        />
       </BottomSheet>
     </View>
   );
@@ -49,5 +54,13 @@ const styles = Style.create((theme) => ({
     position: 'absolute',
     bottom: 30,
     width: Dimensions.get('window').width,
+  },
+  button: {
+    borderRadius: 100,
+    height: 60,
+    width: 60,
+    padding: theme.spacing.medium,
+    flexGrow: 0,
+    flexShrink: 0,
   },
 }));

@@ -1,18 +1,32 @@
-import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
-import React from 'react';
+import { useBottomSheet } from '@gorhom/bottom-sheet';
+import React, { useState } from 'react';
 import {
   View,
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
-  Button,
 } from 'react-native';
 
-import { TextInput, Text } from '../components';
+import { TextInput, Text, Button } from '../components';
 import { Style } from '../theme';
 
-export const MeasurementView = () => {
+export const MeasurementView = ({
+  onSave,
+}: {
+  onSave: (wight: number) => void;
+  onClose: () => void;
+}) => {
+  const [weight, setWeight] = useState<number>();
+  const sheet = useBottomSheet();
+
+  const close = async () => {
+    await Keyboard.dismiss();
+    setTimeout(() => {
+      sheet.close();
+    }, 10);
+  };
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -23,10 +37,30 @@ export const MeasurementView = () => {
         style={{ borderWidth: 5, borderColor: 'red', height: 200 }}
       >
         <View style={styles.inner}>
-          <Text>Add weight</Text>
-          <TextInput keyboardType="numeric" />
-          <View style={styles.btnContainer}>
-            <Button title="Submit" onPress={() => null} />
+          <View>
+            <Text>Add weight</Text>
+            <TextInput
+              keyboardType="numeric"
+              value={weight?.toString()}
+              onChange={({ nativeEvent }) =>
+                setWeight(parseFloat(nativeEvent.text))
+              }
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button preset="ghost" onPress={() => close()}>
+              Cancel
+            </Button>
+            <Button
+              onPress={() => {
+                if (weight) {
+                  onSave(weight);
+                  close();
+                }
+              }}
+            >
+              Save
+            </Button>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -41,13 +75,15 @@ const styles = Style.create((theme) => ({
   inner: {
     flex: 1,
     padding: theme.spacing.medium,
+    justifyContent: 'space-between',
   },
   header: {
     fontSize: 36,
     marginBottom: 48,
   },
-  btnContainer: {
-    backgroundColor: 'white',
-    marginTop: 12,
+  buttonContainer: {
+    paddingVertical: theme.spacing.medium,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 }));
