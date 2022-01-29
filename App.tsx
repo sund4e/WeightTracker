@@ -6,6 +6,7 @@ import Chart from './components/Chart';
 import { Style } from './theme';
 import { BottomSheet } from './views/bottomSheet';
 import { MeasurementView } from './views/measurementView';
+import { SummaryView } from './views/summaryView';
 import { addWeight, getWeights, WeightData } from './weights';
 
 export default function App() {
@@ -23,6 +24,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      {/* <Card>
+        <SummaryView data={data} date={date} />
+      </Card> */}
       <Card>
         <Chart data={data} currentDate={date} setDate={setDate} height={700} />
       </Card>

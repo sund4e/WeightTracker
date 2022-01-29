@@ -39,6 +39,7 @@ const theme = {
   },
   font: {
     medium: 16,
+    large: 26,
   },
 };
 
