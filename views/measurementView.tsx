@@ -1,5 +1,5 @@
 import { useBottomSheet } from '@gorhom/bottom-sheet';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   KeyboardAvoidingView,
@@ -13,9 +13,10 @@ import { Style } from '../theme';
 
 export const MeasurementView = ({
   onSave,
+  savedWeight,
 }: {
-  onSave: (wight: number) => void;
-  onClose: () => void;
+  onSave: (weight: number) => void;
+  savedWeight: number;
 }) => {
   const [weight, setWeight] = useState<number>();
   const sheet = useBottomSheet();
@@ -26,6 +27,10 @@ export const MeasurementView = ({
       sheet.close();
     }, 10);
   };
+
+  useEffect(() => {
+    setWeight(savedWeight);
+  }, [savedWeight]);
 
   return (
     <KeyboardAvoidingView

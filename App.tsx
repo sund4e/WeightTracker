@@ -32,10 +32,7 @@ export default function App() {
         </Button>
       </View>
       <BottomSheet ref={bottomSheetRef}>
-        <MeasurementView
-          onSave={onSubmitWeight}
-          onClose={() => bottomSheetRef.current?.close()}
-        />
+        <MeasurementView onSave={onSubmitWeight} savedWeight={data[date]} />
       </BottomSheet>
     </View>
   );
