@@ -28,7 +28,7 @@ export default function App() {
         <SummaryView data={data} date={date} />
       </Card> */}
       <Card>
-        <Chart data={data} currentDate={date} setDate={setDate} height={700} />
+        <Chart data={data} currentDate={date} setDate={setDate} />
       </Card>
       <View style={styles.bottomContainer}>
         <Button onPress={onPressButton} style={styles.button}>
