@@ -2,6 +2,9 @@ import { moveDate } from './utils';
 export type WeightData = Record<string, number>;
 
 const weights: WeightData = {
+  [moveDate(-18)]: 52,
+  [moveDate(-17)]: 53,
+  [moveDate(-16)]: 53.5,
   [moveDate(-20)]: 55,
   [moveDate(-19)]: 53,
   [moveDate(-18)]: 52,

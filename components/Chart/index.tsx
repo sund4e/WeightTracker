@@ -94,6 +94,8 @@ export default function Chart({
   };
 
   const chartHeight = height || screenHeight;
+  const valuesVisible = 7;
+  const chartWidth = (keys.length * (width || screenWidth)) / valuesVisible;
 
   return keys.length > 0 ? (
     <View style={styles.container}>
@@ -104,7 +106,7 @@ export default function Chart({
       />
       <ScrollView
         horizontal
-        // contentOffset={{ x: 10000, y: 0 }} // i needed the scrolling to start from the end not the start
+        contentOffset={{ x: chartWidth - 0.5 * (width || screenWidth), y: 0 }} // start scrolling from the end not the start
         showsHorizontalScrollIndicator={false} // to hide scroll bar
       >
         <LineChart
@@ -125,7 +127,7 @@ export default function Chart({
             ],
           }}
           decorator={() => <Tooltip />}
-          width={(keys.length * (width || screenWidth)) / 7}
+          width={chartWidth}
           height={chartHeight}
           yAxisSuffix="kg"
           yAxisInterval={1} // optional, defaults to 1
@@ -135,7 +137,7 @@ export default function Chart({
           onDataPointClick={onPointClick}
           getDotColor={getDotColor}
           style={{
-            paddingRight: 0, // Remove white space from right side
+            paddingRight: 12, // Remove white space from right side
             paddingTop: 6, // position chart correctly relative to Y axis
           }}
           segments={5}
