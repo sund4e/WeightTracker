@@ -10,13 +10,24 @@ import { YAxis } from './YAxis';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height * 0.75;
+const FontSize = 12; // from react-native-chart-kit
+const XLabelHeight = FontSize * 2;
+
+// react-native-chart-kit draws the chart only for partial height and leave white space below
+// Calculates the chart height based on the desired height so that if conteiner has height X
+// the chart is drawn so that the white space is left outside of the container
+// reverse engineered from here:
+// https://github.com/indiespirit/react-native-chart-kit/blob/134ed05556c20e3bfdcf4b77bf32c647636d2656/src/AbstractChart.tsx#L288
+export const getChartFullHeight = (height: number) => {
+  return (height - XLabelHeight) / 0.75 - XLabelHeight;
+};
 
 export default function Chart({
   data,
   currentDate,
   setDate,
   width,
-  height,
+  height = screenHeight,
 }: {
   data: WeightData;
   currentDate: string;
@@ -59,17 +70,23 @@ export default function Chart({
     },
   };
 
-  const chartHeight = height || screenHeight;
+  const chartHeight = height;
   const valuesVisible = 7;
   const chartWidth = (keys.length * (width || screenWidth)) / valuesVisible;
   const yAxisInterval = 1;
 
   return keys.length > 0 ? (
-    <View style={styles.container}>
+    <View
+      style={{
+        ...styles.container,
+        height,
+      }}
+    >
       <YAxis
         maxValue={maxValue}
         minValue={minValue}
         chartHeight={chartHeight}
+        style={{ height: height - XLabelHeight }}
       />
       <ScrollView
         horizontal
@@ -95,7 +112,7 @@ export default function Chart({
           }}
           decorator={() => <Tooltip />}
           width={chartWidth}
-          height={chartHeight}
+          height={getChartFullHeight(height)}
           yAxisInterval={yAxisInterval}
           chartConfig={chartConfig}
           withHorizontalLabels={false} // We render Y axis outside chart to enable horizontal scrolling

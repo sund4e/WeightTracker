@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ViewProps } from 'react-native';
 
 import { Style } from '../../theme';
 import { Text } from '../Text/Text';
@@ -17,21 +17,17 @@ export const YAxis = ({
   maxValue,
   minValue,
   chartHeight,
+  ...overrideProps
 }: {
   maxValue: number;
   minValue: number;
   chartHeight: number;
-}) => {
+} & ViewProps) => {
   const yAxisValues = arrayFromRange(minValue, maxValue).reverse();
-
-  // react-native-chart-kit doesn't draw chart area for the full chart height
-  // realHeight revers engineered from here:
-  // https://github.com/indiespirit/react-native-chart-kit/blob/134ed05556c20e3bfdcf4b77bf32c647636d2656/src/AbstractChart.tsx#L288
-  const fontSize = 12;
-  const realHeight = chartHeight * 0.75 + 2 * fontSize;
+  const { style, ...rest } = overrideProps;
 
   return (
-    <View style={{ ...styles.yAxis, height: realHeight }}>
+    <View style={[styles.yAxis, style]} {...rest}>
       {yAxisValues.map((value, index) => (
         <Text
           size="small"
