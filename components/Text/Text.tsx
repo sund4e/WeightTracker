@@ -8,11 +8,15 @@ export const Text = ({
   size,
 }: {
   children?: React.ReactElement | string;
-  size?: 'large';
+  size?: 'large' | 'small';
 }) => {
   const style = {
     ...styles.text,
-    ...(size === 'large' ? styles.textLarge : {}),
+    ...(size === 'large'
+      ? styles.textLarge
+      : size === 'small'
+      ? styles.textSmall
+      : {}),
   };
   return <RNText style={style}>{children}</RNText>;
 };
@@ -24,5 +28,8 @@ const styles = Style.create((theme) => ({
   },
   textLarge: {
     fontSize: theme.font.large,
+  },
+  textSmall: {
+    fontSize: theme.font.small,
   },
 }));

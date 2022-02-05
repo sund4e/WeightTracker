@@ -38,6 +38,7 @@ const theme = {
     text: palette.light['2'],
   },
   font: {
+    small: 12,
     medium: 16,
     large: 26,
   },

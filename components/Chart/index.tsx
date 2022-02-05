@@ -6,44 +6,10 @@ import { useTheme, Style } from '../../theme';
 import { WeightData } from '../../weights';
 import { Text } from '../Text/Text';
 import { Tooltip } from './Tooltip';
+import { YAxis } from './YAxis';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height * 0.75;
-
-function arrayFromRange(min: number, max: number): number[] {
-  const len = max - min + 1;
-  const arr = new Array(len);
-  for (let i = 0; i < len; i++) {
-    arr[i] = min + i;
-  }
-  return arr;
-}
-
-const YAxis = ({
-  maxValue,
-  minValue,
-  chartHeight,
-}: {
-  maxValue: number;
-  minValue: number;
-  chartHeight: number;
-}) => {
-  const yAxisValues = arrayFromRange(minValue, maxValue).reverse();
-
-  // react-native-chart-kit doesn't draw chart area for the full chart height
-  // realHeight revers engineered from here:
-  // https://github.com/indiespirit/react-native-chart-kit/blob/134ed05556c20e3bfdcf4b77bf32c647636d2656/src/AbstractChart.tsx#L288
-  const fontSize = 12;
-  const realHeight = chartHeight * 0.75 + 2 * fontSize;
-
-  return (
-    <View style={{ ...styles.yAxis, height: realHeight }}>
-      {yAxisValues.map((value, index) => (
-        <Text key={`yLabel-${index}`}>{value.toString()}</Text>
-      ))}
-    </View>
-  );
-};
 
 export default function Chart({
   data,
@@ -96,6 +62,7 @@ export default function Chart({
   const chartHeight = height || screenHeight;
   const valuesVisible = 7;
   const chartWidth = (keys.length * (width || screenWidth)) / valuesVisible;
+  const yAxisInterval = 1;
 
   return keys.length > 0 ? (
     <View style={styles.container}>
@@ -129,8 +96,7 @@ export default function Chart({
           decorator={() => <Tooltip />}
           width={chartWidth}
           height={chartHeight}
-          yAxisSuffix="kg"
-          yAxisInterval={1} // optional, defaults to 1
+          yAxisInterval={yAxisInterval}
           chartConfig={chartConfig}
           withHorizontalLabels={false} // We render Y axis outside chart to enable horizontal scrolling
           bezier
@@ -152,9 +118,5 @@ export default function Chart({
 const styles = Style.create((theme) => ({
   container: {
     flexDirection: 'row',
-  },
-  yAxis: {
-    justifyContent: 'space-between',
-    paddingRight: theme.spacing.small,
   },
 }));
