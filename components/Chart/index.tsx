@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Dimensions,
-  ScrollView,
-  View,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { Dimensions, ScrollView, View, Pressable } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 
 import { useTheme, Style } from '../../theme';
@@ -90,7 +85,11 @@ export default function Chart({
   const yAxisInterval = 1;
 
   return keys.length > 0 ? (
-    <TouchableWithoutFeedback onPress={() => setTooltipLocation(undefined)}>
+    <Pressable
+      onPress={() => {
+        setTooltipLocation(undefined);
+      }}
+    >
       <View
         style={{
           ...styles.container,
@@ -149,7 +148,7 @@ export default function Chart({
           />
         </ScrollView>
       </View>
-    </TouchableWithoutFeedback>
+    </Pressable>
   ) : (
     <Text>Add your weight to view data</Text>
   );

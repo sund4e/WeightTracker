@@ -4,7 +4,7 @@ import { View, Dimensions } from 'react-native';
 import { Card, Button } from './components';
 import Chart from './components/Chart';
 import { Style } from './theme';
-import { BottomSheet } from './views/bottomSheet';
+import { BottomSheet, BottomSheetType } from './views/bottomSheet';
 import { MeasurementView } from './views/measurementView';
 import { SummaryView } from './views/summaryView';
 import { addWeight, getWeights, WeightData } from './weights';
@@ -12,7 +12,8 @@ import { addWeight, getWeights, WeightData } from './weights';
 export default function App() {
   const [data, setData] = useState<WeightData>(getWeights());
   const [date, setDate] = useState(new Date().toDateString());
-  const bottomSheetRef = useRef<any>(null);
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const bottomSheetRef = useRef<BottomSheetType>(null);
   const onSubmitWeight = (weight: number) => {
     addWeight(weight, date);
     setData(getWeights());
@@ -22,20 +23,38 @@ export default function App() {
     bottomSheetRef.current?.expand();
   };
 
+  const onChangeBottomSheet = (index: number) => {
+    if (index === -1) {
+      setIsBottomSheetOpen(false);
+    } else {
+      setIsBottomSheetOpen(true);
+    }
+  };
+
+  const onClickMainView = () => {
+    if (isBottomSheetOpen) {
+      bottomSheetRef.current?.close();
+      return true;
+    }
+    return false;
+  };
+
   return (
-    <View style={styles.container}>
-      {/* <Card>
-        <SummaryView data={data} date={date} />
-      </Card> */}
-      <Card>
-        <Chart data={data} currentDate={date} setDate={setDate} />
-      </Card>
-      <View style={styles.bottomContainer}>
-        <Button onPress={onPressButton} style={styles.button}>
-          +
-        </Button>
+    <View style={styles.view}>
+      <View
+        style={styles.container}
+        onStartShouldSetResponderCapture={onClickMainView}
+      >
+        <Card>
+          <Chart data={data} currentDate={date} setDate={setDate} />
+        </Card>
+        <View style={styles.bottomContainer}>
+          <Button onPress={onPressButton} style={styles.button}>
+            +
+          </Button>
+        </View>
       </View>
-      <BottomSheet ref={bottomSheetRef}>
+      <BottomSheet ref={bottomSheetRef} onChange={onChangeBottomSheet}>
         <MeasurementView onSave={onSubmitWeight} savedWeight={data[date]} />
       </BottomSheet>
     </View>
@@ -43,6 +62,9 @@ export default function App() {
 }
 
 const styles = Style.create((theme) => ({
+  view: {
+    flex: 1,
+  },
   container: {
     paddingVertical: 50,
     flex: 1,
