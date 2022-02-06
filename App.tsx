@@ -1,17 +1,21 @@
 import React, { useState, useRef } from 'react';
 import { View, Dimensions } from 'react-native';
 
+import EditIcon from './assets/icons/edit.svg';
+import PlusIcon from './assets/icons/plus.svg';
 import { Card, Button } from './components';
 import Chart from './components/Chart';
-import { Style } from './theme';
+import { Style, useTheme } from './theme';
 import { BottomSheet, BottomSheetType } from './views/bottomSheet';
 import { MeasurementView } from './views/measurementView';
 import { SummaryView } from './views/summaryView';
 import { addWeight, getWeights, WeightData } from './weights';
 
 export default function App() {
+  const { color } = useTheme();
+  const currentDate = new Date().toDateString();
   const [data, setData] = useState<WeightData>(getWeights());
-  const [date, setDate] = useState(new Date().toDateString());
+  const [date, setDate] = useState(currentDate);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const bottomSheetRef = useRef<BottomSheetType>(null);
   const onSubmitWeight = (weight: number) => {
@@ -39,6 +43,8 @@ export default function App() {
     return false;
   };
 
+  const Icon = date === currentDate ? PlusIcon : EditIcon;
+
   return (
     <View style={styles.view}>
       <View
@@ -50,7 +56,7 @@ export default function App() {
         </Card>
         <View style={styles.bottomContainer}>
           <Button onPress={onPressButton} style={styles.button}>
-            +
+            <Icon color={color.text} />
           </Button>
         </View>
       </View>
