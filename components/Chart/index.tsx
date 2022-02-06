@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, ScrollView, View, Pressable } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 
@@ -42,6 +42,10 @@ export default function Chart({
     (date) => `${new Date(date).getDate()}/${new Date(date).getMonth()}`
   );
   const values = Object.values(data);
+
+  useEffect(() => {
+    setTooltipLocation(undefined);
+  }, [data]);
 
   const onPointClick = (pointData: {
     index: number;
