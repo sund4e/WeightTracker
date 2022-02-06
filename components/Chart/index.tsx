@@ -89,70 +89,65 @@ export default function Chart({
   const yAxisInterval = 1;
 
   return keys.length > 0 ? (
-    <Pressable
-      onPress={() => {
+    <View
+      style={{
+        ...styles.container,
+        height,
+      }}
+      onStartShouldSetResponder={() => {
         setTooltipLocation(undefined);
+        return false;
       }}
     >
-      <View
-        style={{
-          ...styles.container,
-          height,
-        }}
+      <YAxis
+        maxValue={maxValue}
+        minValue={minValue}
+        chartHeight={chartHeight}
+        style={{ height: height - XLabelHeight }}
+      />
+      <ScrollView
+        horizontal
+        contentOffset={{ x: chartWidth - 0.5 * (width || screenWidth), y: 0 }} // start scrolling from the end not the start
+        showsHorizontalScrollIndicator={false} // to hide scroll bar
       >
-        <YAxis
-          maxValue={maxValue}
-          minValue={minValue}
-          chartHeight={chartHeight}
-          style={{ height: height - XLabelHeight }}
+        <LineChart
+          data={{
+            labels: keys,
+            datasets: [
+              {
+                data: values,
+              },
+              {
+                data: [minValue], //Min Y value for chart
+                withDots: false,
+              },
+              {
+                data: [maxValue], // MaxY for chart
+                withDots: false,
+              },
+            ],
+          }}
+          decorator={() =>
+            tooltipLocation && (
+              <Tooltip {...tooltipLocation} value={`${data[currentDate]} kg`} />
+            )
+          }
+          width={chartWidth}
+          height={getChartFullHeight(height)}
+          yAxisInterval={yAxisInterval}
+          chartConfig={chartConfig}
+          withHorizontalLabels={false} // We render Y axis outside chart to enable horizontal scrolling
+          bezier
+          onDataPointClick={onPointClick}
+          getDotColor={getDotColor}
+          style={{
+            paddingRight: 12, // Remove white space from right side
+            paddingTop: 6, // position chart correctly relative to Y axis
+          }}
+          segments={5}
         />
-        <ScrollView
-          horizontal
-          contentOffset={{ x: chartWidth - 0.5 * (width || screenWidth), y: 0 }} // start scrolling from the end not the start
-          showsHorizontalScrollIndicator={false} // to hide scroll bar
-        >
-          <LineChart
-            data={{
-              labels: keys,
-              datasets: [
-                {
-                  data: values,
-                },
-                {
-                  data: [minValue], //Min Y value for chart
-                  withDots: false,
-                },
-                {
-                  data: [maxValue], // MaxY for chart
-                  withDots: false,
-                },
-              ],
-            }}
-            decorator={() =>
-              tooltipLocation && (
-                <Tooltip
-                  {...tooltipLocation}
-                  value={`${data[currentDate]} kg`}
-                />
-              )
-            }
-            width={chartWidth}
-            height={getChartFullHeight(height)}
-            yAxisInterval={yAxisInterval}
-            chartConfig={chartConfig}
-            withHorizontalLabels={false} // We render Y axis outside chart to enable horizontal scrolling
-            bezier
-            onDataPointClick={onPointClick}
-            getDotColor={getDotColor}
-            style={{
-              paddingRight: 12, // Remove white space from right side
-              paddingTop: 6, // position chart correctly relative to Y axis
-            }}
-            segments={5}
-          />
-        </ScrollView>
-      </View>
-    </Pressable>
+      </ScrollView>
+    </View>
   ) : (
     <Text>Add your weight to view data</Text>
   );
