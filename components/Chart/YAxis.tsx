@@ -13,6 +13,19 @@ function arrayFromRange(min: number, max: number): number[] {
   return arr;
 }
 
+export const getYAxisInterval = (
+  maxValue: number,
+  minValue: number
+): number => {
+  const maxValuesVisible = 5; // Agian, comes from react-native-chart-kit
+  const change = maxValue - minValue;
+  if (change > maxValuesVisible) {
+    const maxOverTen = maxValue - maxValuesVisible;
+    return 1 + getYAxisInterval(maxOverTen, minValue);
+  }
+  return 1;
+};
+
 export const YAxis = ({
   maxValue,
   minValue,
@@ -23,7 +36,12 @@ export const YAxis = ({
   minValue: number;
   chartHeight: number;
 } & ViewProps) => {
-  const yAxisValues = arrayFromRange(minValue, maxValue).reverse();
+  const yAxisInterval = getYAxisInterval(maxValue, minValue);
+  const yAxisValues = arrayFromRange(minValue, maxValue)
+    .reverse()
+    .filter(function (_, i) {
+      return i % yAxisInterval === 0;
+    });
   const { style, ...rest } = overrideProps;
 
   return (

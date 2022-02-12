@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, ScrollView, View, Pressable } from 'react-native';
+import { Dimensions, ScrollView, View } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 
 import { useTheme, Style } from '../../theme';
@@ -86,7 +86,6 @@ export default function Chart({
   const chartHeight = height;
   const valuesVisible = 7;
   const chartWidth = (keys.length * (width || screenWidth)) / valuesVisible;
-  const yAxisInterval = 1;
 
   return keys.length > 0 ? (
     <View
@@ -138,7 +137,7 @@ export default function Chart({
           }
           width={chartWidth}
           height={getChartFullHeight(height)}
-          yAxisInterval={yAxisInterval}
+          yAxisInterval={1}
           chartConfig={chartConfig}
           withHorizontalLabels={false} // We render Y axis outside chart to enable horizontal scrolling
           bezier
