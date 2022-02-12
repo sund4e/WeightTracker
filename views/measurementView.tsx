@@ -47,9 +47,14 @@ export const MeasurementView = ({
             <TextInput
               keyboardType="numeric"
               value={weight?.toString()}
-              onChange={({ nativeEvent }) =>
-                setWeight(parseFloat(nativeEvent.text))
-              }
+              onChange={({ nativeEvent }) => {
+                const newValue = nativeEvent.text;
+                if (newValue.length > 0) {
+                  setWeight(parseFloat(nativeEvent.text));
+                } else {
+                  setWeight(null);
+                }
+              }}
             />
           </View>
           <View style={styles.buttonContainer}>

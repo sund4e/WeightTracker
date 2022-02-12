@@ -10,7 +10,6 @@ export const TextInput = ({ style, ...rest }: TextInputProps) => {
       <View style={styles.inner}>
         <BottomSheetTextInput
           style={StyleSheet.compose(styles.textInput, style)}
-          keyboardType="numeric"
           {...rest}
         />
       </View>
