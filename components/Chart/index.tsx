@@ -24,14 +24,14 @@ export const getChartFullHeight = (height: number) => {
 
 export default function Chart({
   data,
-  currentDate,
-  setDate,
+  selectedIndex,
+  onChangeSelectedIndex,
   width,
   height = screenHeight,
 }: {
   data: WeightData;
-  currentDate: string;
-  setDate: (newDate: string) => void;
+  selectedIndex: number | null;
+  onChangeSelectedIndex: (index: number | null) => void;
   width?: number;
   height?: number;
 }) {
@@ -54,12 +54,12 @@ export default function Chart({
     y: number;
     getColor: (opacity: number) => string;
   }) => {
-    setDate(Object.keys(data)[pointData.index]);
+    onChangeSelectedIndex(pointData.index);
     setTooltipLocation({ x: pointData.x, y: pointData.y });
   };
 
   const getDotColor = (dataPoint: number, dataPointIndex: number) => {
-    if (Object.keys(data)[dataPointIndex] === currentDate) {
+    if (dataPointIndex === selectedIndex) {
       return color.accent;
     }
     return color.primary;
@@ -95,7 +95,7 @@ export default function Chart({
         height,
       }}
       onStartShouldSetResponder={() => {
-        setTooltipLocation(undefined);
+        onChangeSelectedIndex(null);
         return false;
       }}
     >
@@ -128,8 +128,12 @@ export default function Chart({
             ],
           }}
           decorator={() =>
-            tooltipLocation && (
-              <Tooltip {...tooltipLocation} value={`${data[currentDate]} kg`} />
+            tooltipLocation &&
+            selectedIndex && (
+              <Tooltip
+                {...tooltipLocation}
+                value={`${data[Object.keys(data)[selectedIndex]]} kg`}
+              />
             )
           }
           width={chartWidth}

@@ -16,9 +16,9 @@ export const MeasurementView = ({
   savedWeight,
 }: {
   onSave: (weight: number) => void;
-  savedWeight: number;
+  savedWeight: number | null;
 }) => {
-  const [weight, setWeight] = useState<number>();
+  const [weight, setWeight] = useState<number | null>();
   const sheet = useBottomSheet();
 
   const close = async () => {

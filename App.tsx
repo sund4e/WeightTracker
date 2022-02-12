@@ -13,13 +13,17 @@ import { addWeight, getWeights, WeightData } from './weights';
 
 export default function App() {
   const { color } = useTheme();
-  const currentDate = new Date().toDateString();
   const [data, setData] = useState<WeightData>(getWeights());
-  const [date, setDate] = useState(currentDate);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const bottomSheetRef = useRef<BottomSheetType>(null);
   const onSubmitWeight = (weight: number) => {
-    addWeight(weight, date);
+    if (!selectedIndex) {
+      addWeight(weight, new Date().toDateString());
+    } else {
+      const selectedDate = Object.keys(data)[selectedIndex];
+      addWeight(weight, selectedDate);
+    }
     setData(getWeights());
   };
 
@@ -43,7 +47,7 @@ export default function App() {
     return false;
   };
 
-  const Icon = date === currentDate ? PlusIcon : EditIcon;
+  const Icon = selectedIndex === null ? PlusIcon : EditIcon;
 
   return (
     <View style={styles.view}>
@@ -52,7 +56,11 @@ export default function App() {
         onStartShouldSetResponderCapture={onClickMainView}
       >
         <Card>
-          <Chart data={data} currentDate={date} setDate={setDate} />
+          <Chart
+            data={data}
+            selectedIndex={selectedIndex}
+            onChangeSelectedIndex={setSelectedIndex}
+          />
         </Card>
         <View style={styles.bottomContainer}>
           <Button onPress={onPressButton} style={styles.button}>
@@ -61,7 +69,12 @@ export default function App() {
         </View>
       </View>
       <BottomSheet ref={bottomSheetRef} onChange={onChangeBottomSheet}>
-        <MeasurementView onSave={onSubmitWeight} savedWeight={data[date]} />
+        <MeasurementView
+          onSave={onSubmitWeight}
+          savedWeight={
+            selectedIndex ? data[Object.keys(data)[selectedIndex]] : null
+          }
+        />
       </BottomSheet>
     </View>
   );
